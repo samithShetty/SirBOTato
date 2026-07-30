@@ -2,6 +2,10 @@
 
 A small [discord.py](https://discordpy.readthedocs.io/) bot that sends Discord prompts to a local [Ollama](https://ollama.com/) chat model through the OpenAI Python SDK and Ollama's OpenAI-compatible API. A LangGraph workflow first asks the model whether a message is meant for the bot, then generates a response only when it is.
 
+![Discord Bot responding the natural language request without explicit reference](image.png)
+
+Notice how here the bot detects it's being spoken to without being explictly pinged or calling any commands.
+
 ## Structure
 
 - `bot.py` — application entry point.
@@ -50,8 +54,3 @@ A small [discord.py](https://discordpy.readthedocs.io/) bot that sends Discord p
 - Send `!reset` in a DM or address it to the bot to clear that channel's saved context.
 
 `MAX_HISTORY_MESSAGES` controls the number of stored user/assistant messages per conversation (default 20); use `0` for stateless prompts. The OpenAI SDK is pointed at `LLM_BASE_URL/v1` (default `http://127.0.0.1:11434/v1`), so model traffic stays local. `LLM_API_KEY` may stay as `ollama` for Ollama's default local server.
-
-## Example
-![Discord Bot responding the natural language request without explicit reference](image.png)
-
-Notice how the bot detects it's being spoken to without being explictly pinged or calling any commands.
