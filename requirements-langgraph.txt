@@ -1,0 +1,2 @@
+# Install alongside requirements.txt when using the LangGraph workflow.
+langgraph>=0.2,<2.0

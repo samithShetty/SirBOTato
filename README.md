@@ -1,6 +1,15 @@
 # SirBOTato
 
-A small [discord.py](https://discordpy.readthedocs.io/) bot that sends Discord prompts to a local [Ollama](https://ollama.com/) chat model through the OpenAI Python SDK and Ollama's OpenAI-compatible API. It replies to DMs and to messages that mention it in a server.
+A small [discord.py](https://discordpy.readthedocs.io/) bot that sends Discord prompts to a local [Ollama](https://ollama.com/) chat model through the OpenAI Python SDK and Ollama's OpenAI-compatible API. A LangGraph workflow first asks the model whether a message is meant for the bot, then generates a response only when it is.
+
+## Structure
+
+- `bot.py` — application entry point.
+- `sirbotato/config.py` — environment configuration.
+- `sirbotato/discord_bot.py` — Discord client, events, and response formatting.
+- `sirbotato/model_inference.py` — OpenAI SDK/Ollama calls and per-channel history.
+- `sirbotato/intent.py` — model-based intent classification.
+- `sirbotato/workflow.py` — LangGraph routing and nodes.
 
 ## Setup
 
@@ -9,7 +18,7 @@ A small [discord.py](https://discordpy.readthedocs.io/) bot that sends Discord p
    ```powershell
    py -m venv .venv
    .\.venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
+   pip install -r requirements.txt -r requirements-langgraph.txt
    ```
 
 2. Install and start Ollama, then download the model (use the exact name available in your Ollama library):
@@ -35,8 +44,14 @@ A small [discord.py](https://discordpy.readthedocs.io/) bot that sends Discord p
 
 ## Use
 
-- Mention the bot in a server: `@YourBot explain black holes simply`
-- Or send it a direct message.
-- Send `!reset` in a DM or after mentioning the bot to clear that channel's saved context.
+- Mention the bot in a server: `@YourBot explain black holes simply`.
+- Or address it naturally in a server; the model decides whether the message is meant for the bot.
+- Direct messages are classified as intended for the bot.
+- Send `!reset` in a DM or address it to the bot to clear that channel's saved context.
 
-`MAX_HISTORY_MESSAGES` controls the number of stored user/assistant messages per conversation (default 20); use `0` for stateless prompts. The OpenAI SDK is pointed at `OLLAMA_BASE_URL/v1` (default `http://127.0.0.1:11434/v1`), so model traffic stays local. `OLLAMA_API_KEY` may stay as `ollama` for Ollama's default local server.
+`MAX_HISTORY_MESSAGES` controls the number of stored user/assistant messages per conversation (default 20); use `0` for stateless prompts. The OpenAI SDK is pointed at `LLM_BASE_URL/v1` (default `http://127.0.0.1:11434/v1`), so model traffic stays local. `LLM_API_KEY` may stay as `ollama` for Ollama's default local server.
+
+## Example
+![Discord Bot responding the natural language request without explicit reference](image.png)
+
+Notice how the bot detects it's being spoken to without being explictly pinged or calling any commands.
