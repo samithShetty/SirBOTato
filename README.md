@@ -9,11 +9,11 @@ Notice how here the bot detects it's being spoken to without being explictly pin
 ## Structure
 
 - `bot.py` — application entry point.
-- `sirbotato/config.py` — environment configuration.
-- `sirbotato/discord_bot.py` — Discord client, events, and response formatting.
-- `sirbotato/model_inference.py` — OpenAI SDK/Ollama calls and per-channel history.
-- `sirbotato/intent.py` — model-based intent classification.
-- `sirbotato/workflow.py` — LangGraph routing and nodes.
+- `src/config.py` — environment configuration.
+- `src/discord_bot.py` — Discord client, events, and response formatting.
+- `src/model_inference.py` — OpenAI SDK/Ollama calls and per-channel history.
+- `src/intent.py` — model-based intent classification.
+- `src/workflow.py` — LangGraph routing and nodes.
 
 ## Setup
 
